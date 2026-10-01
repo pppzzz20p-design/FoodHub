@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodHub — ค้นหาร้านอาหารและรีวิว</title>
+  <meta name="description" content="เว็บค้นหาร้านอาหาร รีวิว เมนู และโปรโมชั่น สไตล์เว็บรวมร้านอาหาร">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#" aria-label="FoodHub">
+      <span class="brand-mark">F</span><span>Food<span>Hub</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#restaurants">ร้านอาหาร</a>
+      <a href="#categories">หมวดหมู่</a>
+      <a href="#promotions">โปรโมชั่น</a>
+      <a href="#reviews">รีวิว</a>
+    </nav>
+    <button class="login-btn" id="loginBtn">เข้าสู่ระบบ</button>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <span class="eyebrow">ค้นพบของอร่อยใกล้คุณ</span>
+      <h1>กินอะไรดีวันนี้?</h1>
+      <p>ค้นหาร้านอาหาร เมนู และรีวิวจากคนที่เคยไปจริง</p>
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="ค้นหาร้านอาหาร เมนู หรือประเภทอาหาร..." autocomplete="off">
+        <select id="locationFilter" aria-label="พื้นที่">
+          <option value="all">ทุกพื้นที่</option>
+          <option value="กรุงเทพฯ">กรุงเทพฯ</option>
+          <option value="อยุธยา">อยุธยา</option>
+          <option value="ลพบุรี">ลพบุรี</option>
+          <option value="เชียงใหม่">เชียงใหม่</option>
+        </select>
+        <button id="searchBtn">ค้นหา</button>
+      </div>
+      <div class="quick-tags">
+        <button data-search="ชาบู">ชาบู</button>
+        <button data-search="คาเฟ่">คาเฟ่</button>
+        <button data-search="บุฟเฟ่ต์">บุฟเฟ่ต์</button>
+        <button data-search="อาหารญี่ปุ่น">อาหารญี่ปุ่น</button>
+        <button data-search="หมูกระทะ">หมูกระทะ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container category-section" id="categories">
+    <div class="section-head">
+      <div><span class="kicker">เลือกตามความชอบ</span><h2>หมวดหมู่ยอดนิยม</h2></div>
+      <button class="text-btn" id="showAllCategories">ดูทั้งหมด →</button>
+    </div>
+    <div class="category-grid" id="categoryGrid"></div>
+  </section>
+
+  <section class="container restaurants-section" id="restaurants">
+    <div class="section-head">
+      <div><span class="kicker">แนะนำสำหรับคุณ</span><h2>ร้านอาหารน่าสนใจ</h2></div>
+      <div class="filters">
+        <select id="ratingFilter">
+          <option value="0">เรตติ้งทั้งหมด</option>
+          <option value="4.5">4.5+ ดาว</option>
+          <option value="4">4+ ดาว</option>
+          <option value="3.5">3.5+ ดาว</option>
+        </select>
+        <select id="priceFilter">
+          <option value="all">ราคาทั้งหมด</option>
+          <option value="฿">฿ ต่ำกว่า 100</option>
+          <option value="฿฿">฿฿ 100–250</option>
+          <option value="฿฿฿">฿฿฿ 251–500</option>
+          <option value="฿฿฿฿">฿฿฿฿ 500+</option>
+        </select>
+        <select id="sortFilter">
+          <option value="recommended">แนะนำ</option>
+          <option value="rating">เรตติ้งสูงสุด</option>
+          <option value="reviews">รีวิวมากสุด</option>
+          <option value="new">ร้านใหม่</option>
+        </select>
+      </div>
+    </div>
+    <div class="active-filter" id="activeFilter"></div>
+    <div class="restaurant-grid" id="restaurantGrid"></div>
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-icon">🍽️</div>
+      <h3>ยังไม่พบร้านที่ค้นหา</h3>
+      <p>ลองเปลี่ยนคำค้นหาหรือปรับตัวกรองดูนะ</p>
+      <button class="primary-btn" id="clearFilters">ล้างตัวกรอง</button>
+    </div>
+  </section>
+
+  <section class="promo-section" id="promotions">
+    <div class="container">
+      <div class="section-head light">
+        <div><span class="kicker">ดีลพิเศษ</span><h2>โปรโมชั่นที่ไม่ควรพลาด</h2></div>
+      </div>
+      <div class="promo-grid">
+        <article class="promo-card">
+          <div><span class="promo-badge">ลด 20%</span><h3>สมาชิกใหม่รับส่วนลด</h3><p>สมัครสมาชิกวันนี้ รับคูปองส่วนลดสำหรับร้านที่ร่วมรายการ</p><button class="outline-btn">ดูรายละเอียด</button></div>
+        </article>
+        <article class="promo-card promo-2">
+          <div><span class="promo-badge">HOT DEAL</span><h3>มื้อกลางวันสุดคุ้ม</h3><p>รวมร้านเด็ดราคาเบา ๆ สำหรับมื้อกลางวัน</p><button class="outline-btn">สำรวจร้าน</button></div>
+        </article>
+        <article class="promo-card promo-3">
+          <div><span class="promo-badge">NEW</span><h3>ร้านใหม่มาแรง</h3><p>เปิดประสบการณ์กับร้านใหม่ที่กำลังเป็นที่พูดถึง</p><button class="outline-btn">ดูร้านใหม่</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="container reviews-section" id="reviews">
+    <div class="section-head">
+      <div><span class="kicker">เสียงจากนักกิน</span><h2>รีวิวล่าสุด</h2></div>
+      <button class="text-btn" id="writeReviewBtn">เขียนรีวิว →</button>
+    </div>
+    <div class="review-grid" id="reviewGrid"></div>
+  </section>
+
+  <section class="newsletter">
+    <div class="container newsletter-inner">
+      <div><span class="kicker">FoodHub Newsletter</span><h2>อย่าพลาดร้านเด็ดและดีลใหม่ ๆ</h2><p>รับข่าวสารร้านอาหาร โปรโมชั่น และเมนูน่าสนใจ</p></div>
+      <form id="newsletterForm"><input type="email" placeholder="อีเมลของคุณ" required><button>สมัครรับข่าวสาร</button></form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div><a class="brand" href="#"><span class="brand-mark">F</span><span>Food<span>Hub</span></span></a><p>ค้นหาร้านอาหารและประสบการณ์การกินที่ใช่สำหรับคุณ</p></div>
+    <div><h4>FoodHub</h4><a href="#restaurants">ร้านอาหาร</a><a href="#categories">หมวดหมู่</a><a href="#promotions">โปรโมชั่น</a></div>
+    <div><h4>ช่วยเหลือ</h4><a href="#">ศูนย์ช่วยเหลือ</a><a href="#">ติดต่อเรา</a><a href="#">เงื่อนไขการใช้งาน</a></div>
+    <div><h4>ติดตามเรา</h4><div class="socials"><a href="#">f</a><a href="#">ig</a><a href="#">t</a></div></div>
+  </div>
+  <div class="copyright">© 2026 FoodHub. เว็บไซต์ตัวอย่างสำหรับโปรเจกต์นักเรียน</div>
+</footer>
+
+<div class="modal" id="restaurantModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close="true"></div>
+  <div class="modal-card">
+    <button class="close-btn" data-close="true">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="modal" id="loginModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close="true"></div>
+  <div class="modal-card small">
+    <button class="close-btn" data-close="true">×</button>
+    <div class="modal-icon">👋</div>
+    <h2>เข้าสู่ FoodHub</h2>
+    <p class="muted">เข้าสู่ระบบเพื่อบันทึกร้านโปรดและเขียนรีวิว</p>
+    <form id="loginForm" class="form">
+      <input type="email" placeholder="อีเมล" required>
+      <input type="password" placeholder="รหัสผ่าน" required>
+      <button class="primary-btn">เข้าสู่ระบบ</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
